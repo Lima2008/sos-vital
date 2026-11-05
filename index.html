@@ -1,0 +1,159 @@
+<!--
+    templates/inicio.html
+    ------------------------------------------------------------------
+    Página inicial do app. Recebe da rota "inicio()" em app.py:
+      - guias_em_destaque: os 4 primeiros guias, para os atalhos rápidos
+      - estatisticas_publicas: usada na prévia de impacto no rodapé
+    ------------------------------------------------------------------
+-->
+<!--
+    templates/base.html
+    ------------------------------------------------------------------
+    Template "molde": define o esqueleto que se repete em toda página
+    (topo com o logo e o botão SOS, barra de navegação embaixo, fontes
+    e CSS). As outras páginas (inicio.html, guias.html, etc.) estendem
+    este arquivo e só preenchem o bloco de conteúdo central.
+
+    Aviso para quem for editar este comentário: como este arquivo
+    inteiro é lido pelo Jinja (o motor de templates), NÃO escreva aqui
+    dentro exemplos com chaves duplas ou "por cento-chave" de verdade
+    — o Jinja não sabe que isto é um comentário de HTML e tentaria
+    interpretar o exemplo como um comando de verdade.
+
+    Isso evita copiar e colar o mesmo cabeçalho/rodapé em cada página.
+    ------------------------------------------------------------------
+-->
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SOS Vital</title>
+
+  <!-- Fontes do Google Fonts: Fraunces (títulos), Manrope (texto),
+       IBM Plex Mono (números / dados). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="estilo.css">
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0E6E63">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="SOS Vital">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="description" content="SOS Vital: ligue 192 em 1 toque e siga os primeiros socorros passo a passo.">
+</head>
+<body>
+  <div class="shell">
+
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">♥</div>
+        <span class="brand-name">SOS Vital</span>
+      </div>
+      <a class="sos-pill" href="sos.html">☎ SOS</a>
+    </div>
+
+    <main>
+      
+      
+  <div style="padding: 22px 4px 8px;">
+    <div style="text-transform:uppercase; font-size:.72rem; letter-spacing:.12em; color:var(--teal); font-weight:800;">
+      Primeiros socorros
+    </div>
+    <h1 style="font-size:1.7rem; line-height:1.15; margin-top:6px;">
+      Os primeiros minutos<br>salvam vidas.
+    </h1>
+    <p style="color:var(--ink-soft); margin-top:8px; font-size:.95rem; line-height:1.5;">
+      Enquanto a ambulância não chega, você pode fazer a diferença.
+      Toque abaixo para ligar agora e ser guiado passo a passo.
+    </p>
+  </div>
+
+  <!-- Botão principal: leva direto para a rota /sos -->
+  <a class="sos-launch" href="sos.html">
+    <span class="ring">📞</span>
+    <span>
+      <b>Toque em emergência</b>
+      <span>Liga para o SAMU e abre os primeiros socorros</span>
+    </span>
+  </a>
+
+  <div style="display:flex; align-items:baseline; justify-content:space-between; margin:30px 0 12px;">
+    <h2 style="font-size:1.15rem;">Guias rápidos</h2>
+    <a href="guias.html" style="font-size:.8rem; color:var(--teal); font-weight:700; text-decoration:none;">ver todos</a>
+  </div>
+
+  <!-- Laço "for": repete o cartão para cada guia em destaque. -->
+  <div class="cat-grid">
+    
+      <a class="cat-card" href="guia-rcp.html">
+        <div class="icone" style="background: var(--ember);">
+          ❤️
+        </div>
+        <b>RCP em adultos</b>
+        <small>Parada cardíaca / não respira</small>
+      </a>
+    
+      <a class="cat-card" href="guia-engasgo.html">
+        <div class="icone" style="background: var(--ember);">
+          🫁
+        </div>
+        <b>Engasgo (obstrução)</b>
+        <small>Manobra de Heimlich</small>
+      </a>
+    
+      <a class="cat-card" href="guia-sangramento.html">
+        <div class="icone" style="background: var(--ember);">
+          🩸
+        </div>
+        <b>Hemorragia intensa</b>
+        <small>Sangramento que não para</small>
+      </a>
+    
+      <a class="cat-card" href="guia-queimadura.html">
+        <div class="icone" style="background: var(--gold);">
+          🔥
+        </div>
+        <b>Queimaduras</b>
+        <small>Térmicas ou por contato</small>
+      </a>
+    
+  </div>
+
+  <div style="margin-top:26px; background:var(--teal-tint); border-radius:var(--radius-lg); padding:18px; border:1px solid var(--line);">
+    <h3 style="font-size:1.02rem; color:var(--teal-ink); margin-bottom:6px;">Por que isso importa</h3>
+    <p style="font-size:.86rem; color:var(--ink-soft); line-height:1.5; margin:0 0 12px;">
+      No Brasil, cerca de <b>~90% das vítimas de parada cardíaca morrem antes de chegar ao hospital</b>
+      — e a cada minuto sem ajuda, a chance de sobreviver cai por volta de 10%.
+    </p>
+    <a href="impacto.html" style="font-size:.8rem; color:var(--teal-ink); font-weight:700;">ver todos os dados →</a>
+  </div>
+
+    </main>
+
+    <nav class="tabbar">
+      <a href="index.html" class="ativo">
+        <span>🏠</span><span>Início</span>
+      </a>
+      <a href="guias.html" class="">
+        <span>📋</span><span>Guias</span>
+      </a>
+      <a href="impacto.html" class="">
+        <span>📊</span><span>Impacto</span>
+      </a>
+      <a href="perfil.html" class="">
+        <span>👤</span><span>Perfil</span>
+      </a>
+    </nav>
+
+  </div>
+
+<script src="app.js"></script>
+</body>
+</html>

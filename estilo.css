@@ -1,0 +1,584 @@
+/* ==================================================================
+   estilo.css
+   ------------------------------------------------------------------
+   Folha de estilos do SOS Vital.
+
+   Está organizada em blocos, cada um comentado, na seguinte ordem:
+     1) Variáveis de cor e fonte (tema claro/escuro)
+     2) Estrutura geral da página (o "shell" de app)
+     3) Componentes reutilizáveis (cartões, botões, formulário)
+     4) Tela de emergência (SOS) em vermelho
+     5) Ajustes para telas pequenas de celular
+   ================================================================== */
+
+
+/* ------------------------------------------------------------------
+   1) VARIÁVEIS DE COR E FONTE
+   Definimos "tokens" (nomes com significado) em vez de espalhar
+   códigos de cor soltos pelo CSS. Assim, para mudar a cor principal
+   do app inteiro, basta trocar em um lugar só.
+   Também definimos uma versão para tema escuro, ativada
+   automaticamente se o sistema operacional do usuário estiver no
+   modo escuro.
+------------------------------------------------------------------ */
+:root {
+  --paper: #F7F3EA;
+  --paper-raised: #FFFFFF;
+  --ink: #1A2420;
+  --ink-soft: #4B564F;
+  --teal: #0E6E63;
+  --teal-ink: #083F39;
+  --teal-tint: #E1EEEA;
+  --ember: #C6362A;
+  --ember-ink: #7A1E17;
+  --gold: #C8862A;
+  --line: #D8D2C1;
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 9px;
+  --shadow: 0 12px 28px -14px rgba(26, 36, 32, .35);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #10160F;
+    --paper-raised: #182019;
+    --ink: #EFEDE4;
+    --ink-soft: #B7BFB5;
+    --teal: #3FBFAE;
+    --teal-ink: #CFF3EB;
+    --teal-tint: #173430;
+    --ember: #FF7A67;
+    --ember-ink: #FFE0D9;
+    --gold: #E7B563;
+    --line: #33392F;
+    --shadow: 0 16px 32px -16px rgba(0, 0, 0, .6);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Sem isto, um toque um pouco mais demorado em qualquer link/botão pode
+   ser lido pelo iPhone como "selecionar texto" (aquele destaque cinza
+   atrás das palavras) em vez de "tocar para ativar" — foi esse o bug
+   relatado na tela de emergência, onde o texto aparecia todo
+   selecionado e o toque não disparava a ligação. */
+a, button {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Manrope", system-ui, sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+h1, h2, h3 {
+  font-family: "Fraunces", Georgia, serif;
+  margin: 0;
+}
+
+.mono {
+  font-family: "IBM Plex Mono", monospace;
+}
+
+a { color: inherit; }
+
+
+/* ------------------------------------------------------------------
+   2) ESTRUTURA GERAL (o "shell" que imita um app de celular)
+------------------------------------------------------------------ */
+.shell {
+  width: 100%;
+  max-width: 460px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  border-inline: 1px solid var(--line);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 10px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--teal);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-name {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.sos-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--ember);
+  color: #fff;
+  border-radius: 999px;
+  padding: 9px 16px;
+  font-weight: 800;
+  font-size: .82rem;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+}
+
+main {
+  flex: 1;
+  padding: 6px 20px 100px;
+}
+
+/* Barra de navegação fixa embaixo, com as 4 abas do app. */
+nav.tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 460px;
+  background: var(--paper-raised);
+  border-top: 1px solid var(--line);
+  display: flex;
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+}
+
+nav.tabbar a {
+  flex: 1;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 2px;
+  border-radius: 12px;
+  color: var(--ink-soft);
+  font-size: .66rem;
+  font-weight: 700;
+}
+
+nav.tabbar a.ativo {
+  color: var(--teal);
+  background: var(--teal-tint);
+}
+
+
+/* ------------------------------------------------------------------
+   3) COMPONENTES REUTILIZÁVEIS
+------------------------------------------------------------------ */
+
+/* Botão vermelho gigante da página inicial. */
+.sos-launch {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  text-decoration: none;
+  margin-top: 18px;
+  border-radius: var(--radius-lg);
+  background: radial-gradient(120% 140% at 30% 20%, #E6493A 0%, var(--ember) 55%, var(--ember-ink) 100%);
+  color: #fff;
+  padding: 26px 22px;
+  box-shadow: var(--shadow);
+}
+
+.sos-launch .ring {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.sos-launch b {
+  display: block;
+  font-size: 1.15rem;
+}
+
+.sos-launch span {
+  display: block;
+  font-size: .82rem;
+  opacity: .9;
+  margin-top: 2px;
+}
+
+/* Grade de cartões de categoria (usada na Início e nos Guias). */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.cat-card, .guide-row {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.cat-card {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 108px;
+}
+
+.cat-card .icone, .guide-row .icone {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  flex: none;
+}
+
+.cat-card b { font-size: .88rem; }
+.cat-card small, .guide-row small { color: var(--ink-soft); font-size: .74rem; }
+
+/* Lista de guias (página /guias). */
+.guide-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.guide-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+}
+
+.guide-row .icone { width: 38px; height: 38px; }
+.guide-row b { display: block; font-size: .92rem; }
+
+/* Chips de filtro por categoria. */
+.chip-row {
+  display: flex;
+  gap: 8px;
+  padding: 14px 0 4px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+  border-radius: 999px;
+  padding: 7px 13px;
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.chip.ativo {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #fff;
+}
+
+/* Página de detalhe de um guia. */
+.guide-hero {
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  color: #fff;
+  margin-top: 10px;
+  box-shadow: var(--shadow);
+}
+
+.step-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.step {
+  display: flex;
+  gap: 14px;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 14px;
+}
+
+.step .num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--teal-tint);
+  color: var(--teal-ink);
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 600;
+  font-size: .85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step p { margin: 0; font-size: .92rem; line-height: 1.5; }
+
+.warn-box {
+  margin-top: 16px;
+  background: color-mix(in srgb, var(--ember) 12%, var(--paper-raised));
+  border: 1px solid color-mix(in srgb, var(--ember) 30%, var(--line));
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+
+.warn-box b { color: var(--ember-ink); font-size: .84rem; display: block; margin-bottom: 6px; }
+.warn-box ul { margin: 0; padding-left: 18px; font-size: .86rem; color: var(--ink-soft); line-height: 1.55; }
+
+.sticky-call {
+  position: sticky;
+  bottom: 14px;
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--ember);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 14px;
+  font-weight: 800;
+  font-size: .88rem;
+  width: 100%;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+}
+
+/* Cartões de estatística (página Impacto). */
+.stat-card {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.stat-card .big { font-size: 1.7rem; font-weight: 600; color: var(--gold); }
+.stat-card .lbl { font-size: .86rem; font-weight: 700; margin-top: 2px; }
+.stat-card .src { font-size: .72rem; color: var(--ink-soft); margin-top: 6px; line-height: 1.4; }
+
+.live-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.live-card {
+  background: var(--teal-tint);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 12px 10px;
+  text-align: center;
+}
+
+.live-card .n { font-size: 1.25rem; font-weight: 600; color: var(--teal-ink); }
+.live-card .l { font-size: .65rem; color: var(--ink-soft); margin-top: 3px; }
+
+/* Formulário de perfil/cadastro. */
+.field { margin-top: 16px; }
+.field label { display: block; font-size: .82rem; font-weight: 700; margin-bottom: 6px; }
+.field input, .field select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: .92rem;
+}
+
+.seg { display: flex; gap: 8px; }
+.seg label {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+  font-weight: 700;
+  font-size: .82rem;
+  cursor: pointer;
+}
+.seg input { display: none; }
+.seg input:checked + span { color: #fff; }
+.seg label:has(input:checked) { background: var(--teal); border-color: var(--teal); color: #fff; }
+
+.btn-salvar {
+  margin-top: 22px;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 999px;
+  background: var(--teal);
+  color: #fff;
+  font-weight: 800;
+  font-size: .92rem;
+  cursor: pointer;
+}
+
+.mensagem-flash {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  font-size: .85rem;
+  font-weight: 600;
+}
+.mensagem-flash.sucesso { background: var(--teal-tint); color: var(--teal-ink); }
+.mensagem-flash.erro { background: color-mix(in srgb, var(--ember) 15%, var(--paper-raised)); color: var(--ember-ink); }
+
+.nota-privacidade { font-size: .76rem; color: var(--ink-soft); margin-top: 10px; line-height: 1.5; }
+
+
+/* ------------------------------------------------------------------
+   4) TELA DE EMERGÊNCIA (SOS) — página cheia em vermelho
+------------------------------------------------------------------ */
+.sos-page {
+  min-height: 100vh;
+  background: radial-gradient(120% 100% at 50% 0%, #E14B3B 0%, var(--ember-ink) 100%);
+  color: #fff;
+  padding: 22px 22px 40px;
+}
+
+.sos-fechar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: #fff;
+  background: rgba(255, 255, 255, .16);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.sos-icone {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  margin: 18px auto 6px;
+  background: rgba(255, 255, 255, .14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+}
+
+.sos-page h1 { text-align: center; color: #fff; font-size: 1.5rem; margin-top: 8px; }
+.sos-page .sub { text-align: center; font-size: .88rem; opacity: .9; margin-top: 8px; line-height: 1.5; }
+
+.call-btn {
+  margin-top: 22px;
+  width: 100%;
+  padding: 18px;
+  border: none;
+  border-radius: 18px;
+  background: #fff;
+  color: var(--ember-ink);
+  font-weight: 800;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, .35);
+}
+
+.call-btn.secondary {
+  margin-top: 12px;
+  background: rgba(255, 255, 255, .14);
+  color: #fff;
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, .3);
+  font-size: .92rem;
+  padding: 14px;
+}
+
+.dial-fallback {
+  text-align: center;
+  font-size: .78rem;
+  opacity: .85;
+  line-height: 1.5;
+  margin-top: 14px;
+}
+
+.fa-picker { margin-top: 26px; }
+.fa-picker h3 { color: #fff; font-size: 1rem; margin-bottom: 10px; }
+
+.opt {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(255, 255, 255, .25);
+  color: #fff;
+  border-radius: 14px;
+  padding: 13px 14px;
+  margin-top: 8px;
+  font-weight: 700;
+  font-size: .86rem;
+  text-decoration: none;
+}
+
+.sos-guia ol { padding-left: 20px; margin-top: 12px; display: flex; flex-direction: column; gap: 12px; }
+.sos-guia li { font-size: .98rem; line-height: 1.5; font-weight: 600; }
+
+.voltar-mini {
+  display: inline-block;
+  margin-top: 16px;
+  color: rgba(255, 255, 255, .85);
+  font-weight: 700;
+  font-size: .82rem;
+  text-decoration: underline;
+}
+
+
+/* ------------------------------------------------------------------
+   5) AJUSTES PARA TELAS PEQUENAS
+------------------------------------------------------------------ */
+@media (max-width: 400px) {
+  main, .topbar, .sos-page { padding-left: 16px; padding-right: 16px; }
+}

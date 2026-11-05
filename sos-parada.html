@@ -1,0 +1,88 @@
+<!--
+    templates/sos.html
+    ------------------------------------------------------------------
+    Tela de emergência (o "SOS" da tela vermelha). É uma página
+    própria (não usa base.html) porque, numa emergência de verdade,
+    não queremos nenhuma distração de menu — só a ligação e o passo
+    a passo.
+
+    Duas rotas usam este mesmo template (veja app.py):
+      - /sos            -> mostra o seletor de situações
+      - /sos/<situacao>  -> além do seletor, mostra "guia_selecionado"
+                            já preenchido com o passo a passo daquela
+                            situação específica.
+    ------------------------------------------------------------------
+-->
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emergência · SOS Vital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilo.css">
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0E6E63">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="SOS Vital">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="description" content="SOS Vital: ligue 192 em 1 toque e siga os primeiros socorros passo a passo.">
+</head>
+<body>
+  <div class="shell">
+    <div class="sos-page">
+
+      <a class="sos-fechar" href="index.html">✕ Fechar</a>
+
+      <div class="sos-icone">📞</div>
+      <h1>Emergência</h1>
+      <p class="sub">Toque para ligar agora. Fale o endereço com calma e não desligue até ser orientado.</p>
+
+      <!-- Link simples de telefone, sem target="_blank": essa tentativa
+           anterior causava um efeito colateral pior no iPhone (a tela
+           de seleção de texto aparecendo em vez de discar). A correção
+           de verdade para o toque não "grudar" como seleção de texto
+           está em static/css/estilo.css (-webkit-touch-callout: none). -->
+      <a class="call-btn" href="tel:192">☎ Ligar 192 · SAMU</a>
+      <a class="call-btn secondary" href="tel:193">Ligar 193 · Bombeiros</a>
+
+      <p class="dial-fallback">
+        Se o toque não abrir o discador, disque manualmente:
+        <b>192</b> (SAMU) ou <b>193</b> (Bombeiros).
+      </p>
+
+      
+        <!-- Uma situação já foi escolhida: mostra o passo a passo direto. -->
+        <div class="sos-guia" style="margin-top:20px;">
+          <h3 style="color:#fff; font-size:1.05rem;">RCP em adultos</h3>
+          <ol>
+            
+              <li>Verifique a cena: garanta que é seguro se aproximar.</li>
+            
+              <li>Chame a pessoa e toque os ombros. Se não responder, grite por ajuda e peça para alguém ligar 192 e procurar um DEA.</li>
+            
+              <li>Observe o peito por até 10 segundos. Se não respira normalmente (ou só engasga), comece as compressões.</li>
+            
+              <li>Ajoelhe ao lado, mãos sobrepostas no centro do peito, braços esticados.</li>
+            
+              <li>Comprima forte e rápido: cerca de 5-6 cm de profundidade, 100 a 120 vezes por minuto — deixe o peito voltar totalmente entre uma compressão e outra.</li>
+            
+              <li>Se souber fazer ventilação: 30 compressões para 2 ventilações. Se não souber ou não quiser, continue só com compressões, sem parar.</li>
+            
+              <li>Continue até a pessoa reagir, o DEA chegar, o socorro assumir ou você não aguentar mais fisicamente.</li>
+            
+          </ol>
+          <a class="voltar-mini" href="sos.html">← escolher outra situação</a>
+        </div>
+      
+
+    </div>
+  </div>
+
+<script src="app.js"></script>
+</body>
+</html>

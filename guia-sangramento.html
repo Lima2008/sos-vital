@@ -1,0 +1,146 @@
+<!--
+    templates/guia_detalhe.html
+    ------------------------------------------------------------------
+    Mostra um guia completo: cabeçalho colorido, passo a passo
+    numerado, avisos de atenção e um botão fixo para ligar 192.
+    Recebido de app.py -> guia_detalhe(guia_id): a variável "guia".
+    ------------------------------------------------------------------
+-->
+<!--
+    templates/base.html
+    ------------------------------------------------------------------
+    Template "molde": define o esqueleto que se repete em toda página
+    (topo com o logo e o botão SOS, barra de navegação embaixo, fontes
+    e CSS). As outras páginas (inicio.html, guias.html, etc.) estendem
+    este arquivo e só preenchem o bloco de conteúdo central.
+
+    Aviso para quem for editar este comentário: como este arquivo
+    inteiro é lido pelo Jinja (o motor de templates), NÃO escreva aqui
+    dentro exemplos com chaves duplas ou "por cento-chave" de verdade
+    — o Jinja não sabe que isto é um comentário de HTML e tentaria
+    interpretar o exemplo como um comando de verdade.
+
+    Isso evita copiar e colar o mesmo cabeçalho/rodapé em cada página.
+    ------------------------------------------------------------------
+-->
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hemorragia intensa · SOS Vital</title>
+
+  <!-- Fontes do Google Fonts: Fraunces (títulos), Manrope (texto),
+       IBM Plex Mono (números / dados). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="estilo.css">
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0E6E63">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="SOS Vital">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="description" content="SOS Vital: ligue 192 em 1 toque e siga os primeiros socorros passo a passo.">
+</head>
+<body>
+  <div class="shell">
+
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">♥</div>
+        <span class="brand-name">SOS Vital</span>
+      </div>
+      <a class="sos-pill" href="sos.html">☎ SOS</a>
+    </div>
+
+    <main>
+      
+      
+  <a href="guias.html" style="display:inline-flex; align-items:center; gap:6px; color:var(--ink-soft); font-weight:700; font-size:.82rem; padding:14px 0 0; text-decoration:none;">
+    ‹ Voltar aos guias
+  </a>
+
+  <div class="guide-hero" style="background: var(--ember);">
+    <div style="width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:1.4rem;">
+      🩸
+    </div>
+    <h2 style="color:#fff; font-size:1.35rem;">Hemorragia intensa</h2>
+    <p style="font-size:.88rem; opacity:.92; margin-top:6px; line-height:1.45;">Controle o sangramento enquanto o socorro chega, para reduzir a perda de sangue.</p>
+  </div>
+
+  <div class="step-list">
+    <!-- loop.index começa em 1 automaticamente: é o número do passo. -->
+    
+      <div class="step">
+        <div class="num">1</div>
+        <p>Ligue 192 ou peça para alguém ligar.</p>
+      </div>
+    
+      <div class="step">
+        <div class="num">2</div>
+        <p>Pressione o ferimento firmemente com um pano limpo ou gaze.</p>
+      </div>
+    
+      <div class="step">
+        <div class="num">3</div>
+        <p>Se possível, eleve o membro ferido acima do nível do coração.</p>
+      </div>
+    
+      <div class="step">
+        <div class="num">4</div>
+        <p>Não retire o pano se ele encharcar — coloque outro por cima e continue pressionando.</p>
+      </div>
+    
+      <div class="step">
+        <div class="num">5</div>
+        <p>Se houver um objeto encravado, não o remova: pressione ao redor dele, não sobre ele.</p>
+      </div>
+    
+      <div class="step">
+        <div class="num">6</div>
+        <p>Mantenha a pessoa deitada e aquecida até a ajuda chegar.</p>
+      </div>
+    
+  </div>
+
+  
+    <div class="warn-box">
+      <b>Atenção</b>
+      <ul>
+        
+          <li>Use luvas ou um saco plástico entre suas mãos e o sangue, se tiver disponível.</li>
+        
+      </ul>
+    </div>
+  
+
+  <a class="sticky-call" href="tel:192">☎ Ligar 192 agora</a>
+
+    </main>
+
+    <nav class="tabbar">
+      <a href="index.html" class="">
+        <span>🏠</span><span>Início</span>
+      </a>
+      <a href="guias.html" class="ativo">
+        <span>📋</span><span>Guias</span>
+      </a>
+      <a href="impacto.html" class="">
+        <span>📊</span><span>Impacto</span>
+      </a>
+      <a href="perfil.html" class="">
+        <span>👤</span><span>Perfil</span>
+      </a>
+    </nav>
+
+  </div>
+
+<script src="app.js"></script>
+<script>try{var k="sosvital_guias";localStorage.setItem(k,(+localStorage.getItem(k)||0)+1)}catch(e){}</script></body>
+</html>

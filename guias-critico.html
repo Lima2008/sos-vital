@@ -1,0 +1,162 @@
+<!--
+    templates/guias.html
+    ------------------------------------------------------------------
+    Lista de guias, com chips de filtro por categoria.
+    Recebido de app.py -> guias():
+      - guias: lista já filtrada
+      - categoria_selecionada: qual chip deve aparecer "ativo"
+    ------------------------------------------------------------------
+-->
+<!--
+    templates/base.html
+    ------------------------------------------------------------------
+    Template "molde": define o esqueleto que se repete em toda página
+    (topo com o logo e o botão SOS, barra de navegação embaixo, fontes
+    e CSS). As outras páginas (inicio.html, guias.html, etc.) estendem
+    este arquivo e só preenchem o bloco de conteúdo central.
+
+    Aviso para quem for editar este comentário: como este arquivo
+    inteiro é lido pelo Jinja (o motor de templates), NÃO escreva aqui
+    dentro exemplos com chaves duplas ou "por cento-chave" de verdade
+    — o Jinja não sabe que isto é um comentário de HTML e tentaria
+    interpretar o exemplo como um comando de verdade.
+
+    Isso evita copiar e colar o mesmo cabeçalho/rodapé em cada página.
+    ------------------------------------------------------------------
+-->
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SOS Vital</title>
+
+  <!-- Fontes do Google Fonts: Fraunces (títulos), Manrope (texto),
+       IBM Plex Mono (números / dados). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="estilo.css">
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0E6E63">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="SOS Vital">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="description" content="SOS Vital: ligue 192 em 1 toque e siga os primeiros socorros passo a passo.">
+</head>
+<body>
+  <div class="shell">
+
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">♥</div>
+        <span class="brand-name">SOS Vital</span>
+      </div>
+      <a class="sos-pill" href="sos.html">☎ SOS</a>
+    </div>
+
+    <main>
+      
+      
+  <div style="padding: 20px 4px 4px;">
+    <h1 style="font-size:1.4rem;">Guias de primeiros socorros</h1>
+    <p style="color:var(--ink-soft); font-size:.88rem; margin-top:6px;">
+      Passo a passo simples para agir enquanto o socorro não chega.
+    </p>
+  </div>
+
+  <!-- Os "chips" são apenas links para a mesma página com um parâmetro
+       diferente na URL (?categoria=...). O Flask lê esse parâmetro
+       com request.args.get("categoria") lá em app.py. -->
+  <div class="chip-row">
+    <a class="chip " href="guias.html">Todos</a>
+    <a class="chip ativo" href="guias-critico.html">Crítico</a>
+    <a class="chip " href="guias-comum.html">Comum</a>
+  </div>
+
+  <div class="guide-list">
+    
+      <a class="guide-row" href="guia-rcp.html">
+        <div class="icone" style="background: var(--ember);">
+          ❤️
+        </div>
+        <div style="flex:1;">
+          <b>RCP em adultos</b>
+          <small>Parada cardíaca / não respira</small>
+        </div>
+        <div style="color:var(--ink-soft);">›</div>
+      </a>
+    
+      <a class="guide-row" href="guia-engasgo.html">
+        <div class="icone" style="background: var(--ember);">
+          🫁
+        </div>
+        <div style="flex:1;">
+          <b>Engasgo (obstrução)</b>
+          <small>Manobra de Heimlich</small>
+        </div>
+        <div style="color:var(--ink-soft);">›</div>
+      </a>
+    
+      <a class="guide-row" href="guia-sangramento.html">
+        <div class="icone" style="background: var(--ember);">
+          🩸
+        </div>
+        <div style="flex:1;">
+          <b>Hemorragia intensa</b>
+          <small>Sangramento que não para</small>
+        </div>
+        <div style="color:var(--ink-soft);">›</div>
+      </a>
+    
+      <a class="guide-row" href="guia-avc.html">
+        <div class="icone" style="background: var(--ember);">
+          ⚡
+        </div>
+        <div style="flex:1;">
+          <b>Sinais de AVC</b>
+          <small>Reconhecer e agir rápido</small>
+        </div>
+        <div style="color:var(--ink-soft);">›</div>
+      </a>
+    
+      <a class="guide-row" href="guia-afogamento.html">
+        <div class="icone" style="background: var(--ember);">
+          🌊
+        </div>
+        <div style="flex:1;">
+          <b>Afogamento</b>
+          <small>Resgate na água</small>
+        </div>
+        <div style="color:var(--ink-soft);">›</div>
+      </a>
+    
+  </div>
+
+    </main>
+
+    <nav class="tabbar">
+      <a href="index.html" class="">
+        <span>🏠</span><span>Início</span>
+      </a>
+      <a href="guias.html" class="ativo">
+        <span>📋</span><span>Guias</span>
+      </a>
+      <a href="impacto.html" class="">
+        <span>📊</span><span>Impacto</span>
+      </a>
+      <a href="perfil.html" class="">
+        <span>👤</span><span>Perfil</span>
+      </a>
+    </nav>
+
+  </div>
+
+<script src="app.js"></script>
+</body>
+</html>
